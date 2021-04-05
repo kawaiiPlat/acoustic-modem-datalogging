@@ -5,8 +5,10 @@ from datetime import datetime
 
 
 def main(args):
-	filename = 'sender_45_90.csv'
-	ser = serial.Serial('COM7',
+        location = 'data'
+	filename = 'sender.csv'
+        filename = data + '/' + filename
+	ser = serial.Serial('/dev/serial0',
 						baudrate = 19200,
 						parity = serial.PARITY_NONE, 
 						stopbits = serial.STOPBITS_ONE,

@@ -26,16 +26,18 @@ import serial
 import time
 
 def main(args):
+        saveLocation = "data"
 	filename = "reciever_45_90.csv"
-	#setup serial object
-	ser = serial.Serial('COM7',
+        filename = saveLocation +  '/' + filename
+#setup serial object
+	ser = serial.Serial('/dev/serial0',
 			baudrate=19200,
 			parity = serial.PARITY_NONE,
 			stopbits = serial.STOPBITS_ONE,
 			bytesize = serial.EIGHTBITS)
 		
 	#print(ser.read(64).decode('utf-8')
-	#print(ser.write(b'Hello World'))
+	print(ser.write(b'Hello World'))
 	time.sleep(3)
 	#main code body here
 	running = True
