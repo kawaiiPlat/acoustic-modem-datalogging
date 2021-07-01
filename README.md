@@ -4,6 +4,10 @@ Python scripts that are run on two Raspberry Pi 3 B+ units connected to EvoLogic
 
 ## Current Objectives:
 
-* Starting a new data log / amending to the previous on startup of the Pi's
-* Determine what kind of GPS units we are using, find the respective python library / boilerplate
-* Plotting on a map and adding a depth in postprocessing.
+* Get GPIO input from the switch on the box
+  * In the scripts, start a new data log file when the control switch on the box is toggled on, and stop it when it's toggled off
+  * Add respective scripts to `/etc/rc.local` on both pis so it autostarts
+  * Determine how the data logs will be synced/named/matched up
+* Use something like sperf to get transmission stats in the lake
+  * Combine with GPS Data to get sperf stats assossciated with gps points
+* Develop a tool for plotting gps points on a map
