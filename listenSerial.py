@@ -27,34 +27,35 @@ import time
 
 def main(args):
         saveLocation = "data"
-	filename = "reciever_45_90.csv"
+        filename = "reciever_45_90.csv"
         filename = saveLocation +  '/' + filename
 #setup serial object
-	ser = serial.Serial('/dev/serial0',
-			baudrate=19200,
-			parity = serial.PARITY_NONE,
-			stopbits = serial.STOPBITS_ONE,
-			bytesize = serial.EIGHTBITS)
-		
-	#print(ser.read(64).decode('utf-8')
-	print(ser.write(b'Hello World'))
-	time.sleep(3)
-	#main code body here
-	running = True
-	try:	
-		while(running):
-			with open(filename,'a') as csvfile:
-				data = ser.read(64).decode('utf-8')
-				#print(data)
-				csvfile.write(data)	
-	except KeyboardInterrupt:
-		print("Exiting program now")
-	finally:
-		ser.close()
-		pass
-	return 0
+        ser = serial.Serial('/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_D-if00-port0',
+                        baudrate=19200,
+                        parity = serial.PARITY_NONE,
+                        stopbits = serial.STOPBITS_ONE,
+                        bytesize = serial.EIGHTBITS)
+                
+        #print(ser.read(64).decode('utf-8')
+        print(ser.write(b'Hello World'))
+        time.sleep(3)
+        #main code body here
+        running = True
+        try:    
+                while(running):
+                        with open(filename,'a') as csvfile:
+                                data = ser.read(64).decode('utf-8')
+                                #print(data)
+                                csvfile.write(data)     
+        except KeyboardInterrupt:
+                print("Exiting program now")
+        finally:
+                ser.close()
+                pass
+        return 0
 
 if __name__ == '__main__':
     import sys
     sys.exit(main(sys.argv))
+
 
