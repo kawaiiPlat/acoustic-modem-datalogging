@@ -25,32 +25,64 @@
 import serial
 import time
 
+import json
+
+from modem_data_class import modemData
+
 def main(args):
+        
+        #get program start time | will be used as time = 0
+        progStartTime = time.time_ns()
+        
         saveLocation = "data"
-        filename = "reciever_45_90.csv"
+        
+        #filename = "reciever_45_90.csv" older version used a csv
+        filename = "receiver_45_90.json"
         filename = saveLocation +  '/' + filename
-#setup serial object
+        
+        #setup serial object
         ser = serial.Serial('/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_D-if00-port0',
                         baudrate=19200,
                         parity = serial.PARITY_NONE,
                         stopbits = serial.STOPBITS_ONE,
                         bytesize = serial.EIGHTBITS)
-                
+        #print("Serial up")
+        
+        #testing print
         #print(ser.read(64).decode('utf-8')
-        print(ser.write(b'Hello World'))
+        #print(ser.write(b'Hello World'))
+        
         time.sleep(3)
+        
         #main code body here
         running = True
-        try:    
+        try:
+                #print("About to enter loop")
                 while(running):
-                        with open(filename,'a') as csvfile:
+                        with open(filename,'a') as jsonfile:
+                            
+                                #print("File opened")
+                                
+                                # measure start and endtime for Rx 
+                                RxStartTime = time.time_ns()
                                 data = ser.read(64).decode('utf-8')
-                                #print(data)
-                                csvfile.write(data)     
+                                RxEndTime = time.time_ns()
+                                
+                                #print("Serial received")
+                                
+                                #Store received info into data object to dump into JSON
+                                RxObj = modemData(RxStartTime - progStartTime, RxEndTime - progStartTime, data)
+                                
+                                
+                                #dump
+                                print(RxObj.storeJSON())
+                                json.dump(RxObj.storeJSON(), jsonfile)
+                                
         except KeyboardInterrupt:
                 print("Exiting program now")
         finally:
                 ser.close()
+                jsonfile.close()
                 pass
         return 0
 

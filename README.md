@@ -11,3 +11,4 @@ Python scripts that are run on two Raspberry Pi 3 B+ units connected to EvoLogic
 * Use something like [sperf](https://github.com/sandyUni/sPerf) to get transmission stats in the lake
   * Combine with GPS Data to get sperf stats assossciated with gps points
 * Develop a tool for plotting gps points on a map
+* To Get serial0 for GPS: https://rahulgoyal911.medium.com/raspberry-pi-uart-serial-communication-fb400f095bd7
