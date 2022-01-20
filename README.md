@@ -2,6 +2,12 @@
 
 Python scripts that are run on two Raspberry Pi 3 B+ units connected to EvoLogics acoustic modems.
 
+# In Progress: setting up a python venv to make testing easier
+* To set up a new device, use `./setup.sh`, which will create a venv for you and pull the requirements.txt with pip
+* Activate the venv with `source venv/bin/activate`
+* Run your code
+* Deactivate with `deactivate`
+
 ## Current Objectives:
 * Add comments from original Adafruit code for GPS snippets to the new scripts, credit appropriately
 * Get GPIO input from the switch on the box
