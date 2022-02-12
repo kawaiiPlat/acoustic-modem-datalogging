@@ -5,7 +5,6 @@ from datetime import datetime
 
 import board
 import busio
-
 import adafruit_gps
 
 
@@ -23,7 +22,8 @@ def main(args):
         '''
 
         
-        uart = serial.Serial("/dev/serial1", baudrate=9600, timeout=10)
+        uart = serial.Serial("/dev/serial/by-id/usb-Silicon_Labs_CP2104_USB_to_UART_Bridge_Controller_023280BD-if00-port0", baudrate=9600, timeout=10)
+        
         gps = adafruit_gps.GPS(uart, debug=False)
         gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
         gps.send_command(b"PMTK220,1000")
@@ -33,36 +33,44 @@ def main(args):
   #time.sleep(5*60)
         while(True):
             try:
+                time.sleep(1)
                 gps.update()
                 current = time.monotonic()
+                if not gps.has_fix:
+                    # Try again if we don't have a fix yet.
+                    print("Waiting for fix...")
+                    continue
                 gps_separator = "=" * 40  # Print a separator line.
                 gps_latitude = "Latitude: {0:.6f} degrees".format(gps.latitude)
                 gps_longitude = "Longitude: {0:.6f} degrees".format(gps.longitude)
                 if gps.speed_knots is not None:
                     gps_speed = "Speed: {} knots".format(gps.speed_knots)
 
-                ser.write(str.encode(str(gps_separator)))
-                ser.write(str.encode("\n"))
+                print(gps_separator)
+                print(gps_latitude)
+                print(gps_separator)
+                #ser.write(str.encode(str(gps_separator)))
+                #ser.write(str.encode("\n"))
 
-                ser.write(str.encode(str(gps_latitude)))
-                ser.write(str.encode("\n"))
+                #ser.write(str.encode(str(gps_latitude)))
+                #ser.write(str.encode("\n"))
 
-                ser.write(str.encode(str(gps_longitude)))
-                ser.write(str.encode("\n"))
+                #ser.write(str.encode(str(gps_longitude)))
+                #ser.write(str.encode("\n"))
 
-                ser.write(str.encode(str(gps_speed)))
-                ser.write(str.encode("\n"))
+                #ser.write(str.encode(str(gps_speed)))
+                #ser.write(str.encode("\n"))
 
-                time.sleep(1)
 
             except KeyboardInterrupt:
                 print("Exiting program now")
+                return 0
             except:
+                print("error")
                 continue
             finally:
-                ser.close()
+                #ser.close()
                 pass
-            return 0
 
 if __name__ == '__main__':
         import sys
