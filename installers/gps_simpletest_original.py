@@ -36,7 +36,7 @@ gps = adafruit_gps.GPS(uart, debug=False)  # Use UART/pyserial
 # Turn on the basic GGA and RMC info (what you typically want)
 gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
 # Turn on just minimum info (RMC only, location):
-# gps.send_command(b'PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0')
+gps.send_command(b'PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0')
 # Turn off everything:
 # gps.send_command(b'PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0')
 # Turn on everything (not all of it is parsed!)
