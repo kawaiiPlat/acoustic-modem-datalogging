@@ -30,18 +30,18 @@ def main(args):
         stopbits = serial.STOPBITS_ONE,
         bytesize = serial.EIGHTBITS)
 
-        uart = serial.Serial("/dev/serial0", baudrate=9600, timeout=10)
-        gps = adafruit_gps.GPS(uart, debug=False)
-        gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
-        gps.send_command(b"PMTK220,1000")
-        last_print = time.monotonic()
+        # uart = serial.Serial("/dev/serial0", baudrate=9600, timeout=10)
+        # gps = adafruit_gps.GPS(uart, debug=False)
+        # gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
+        # gps.send_command(b"PMTK220,1000")
+        # last_print = time.monotonic()
 
         #time.sleep(5*60)
         
         try:
             while(True):
                 #print("in loop")
-                gps.update()
+                # gps.update()
                 
                 bitArr = ''
                 
@@ -54,9 +54,9 @@ def main(args):
                 ser.write(str.encode(bitArr))
                 TxEndTime = time.time_ns()
                 
-                TxObj = modemData(TxStartTime - progStartTime, TxEndTime - progStartTime, bitArr, gps.longitude, gps.latitude)
+                TxObj = modemData(TxStartTime - progStartTime, TxEndTime - progStartTime, bitArr)#, gps.longitude, gps.latitude)
                 print(TxObj.storeJSON())
-                print(str(gps.latitude) + " " + str(gps.longitude))
+                # print(str(gps.latitude) + " " + str(gps.longitude))
                 
                 #print(TxStartTime)
                 
